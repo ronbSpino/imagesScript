@@ -6,7 +6,7 @@ const generateFile = (assets, external_components) => {
         return `
   <tr>
     <td>${asset.name}</td>
-    <td>${asset.relativePath}</td>
+    <td class="img-path">${asset.relativePath}</td>
     <td>${asset.size} KB</td>
     <td><img src="${asset.url}" style="width: 50px;"></td>
   </tr>
@@ -17,8 +17,24 @@ const generateFile = (assets, external_components) => {
         <html>
         <head>
         <style>
-            table { width: 100%; border-collapse: collapse; }
-            th, td { border: 1px solid black; padding: 8px; text-align: left; }
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 16px;
+            padding: 0;
+            font-size: 14px; 
+            color: #333;
+            background-color: #fff;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px; 
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
         </style>
         </head>
         <body>
