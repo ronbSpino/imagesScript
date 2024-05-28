@@ -68,14 +68,16 @@ if (!fs.existsSync(downloadFolder)) {
     fs.writeFileSync(fileSavePath, fileContent);
 
 
-    console.log('Confluence file created')
+    console.log('Confluence file created', fileSavePath)
 
     await browser.close();
 })();
 
 
 const generateFile = (assets) => {
-    // Create HTML table
+    const totalSize = assets.reduce((total, asset) => {
+        return total + parseFloat(asset.size);
+    }, 0)
     const tableRows = assets.map(asset => {
         return `
   <tr>
@@ -96,7 +98,9 @@ const generateFile = (assets) => {
         </style>
         </head>
         <body>
-        <h1>Assets Table</h1>
+        <h1>Assets Table - ${external_components}</h1>
+        <h2>Total Assets: ${assets.length}</h2>
+        <h2>Total Size: ${totalSize} KB</h2>
         <table>
             <thead>
             <tr>
