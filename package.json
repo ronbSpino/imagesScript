@@ -1,0 +1,23 @@
+{
+  "name": "imagesscript",
+  "version": "1.0.0",
+  "description": "This script is designed to process images by downloading, compressing, and organizing them into structured directories. The final output includes PDF files generated for each component with embedded images.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ronbSpino/imagesScript.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ronbSpino/imagesScript/issues"
+  },
+  "homepage": "https://github.com/ronbSpino/imagesScript#readme",
+  "dependencies": {
+    "node-fetch": "^3.3.2",
+    "puppeteer": "^22.10.0"
+  }
+}
