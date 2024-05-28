@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const processRequests = async (requests, baseUrl, downloadFolder, generateFile) => {
+const processRequests = async (requests, baseUrl, downloadFolder) => {
     const fetch = await import('node-fetch').then(module => module.default);
 
     // Ensure download folder exists
@@ -33,11 +33,7 @@ const processRequests = async (requests, baseUrl, downloadFolder, generateFile) 
     const assets = await Promise.all(downloadPromises);
     assets.sort((a, b) => b.size - a.size);
 
-    const fileContent = generateFile(assets);
-    const fileSavePath = path.join(downloadFolder, 'assetsTable.html');
-    fs.writeFileSync(fileSavePath, fileContent);
 
-    console.log('Confluence file created', fileSavePath);
 
     return assets;
 };

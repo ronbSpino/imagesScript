@@ -1,3 +1,4 @@
+const fs = require('fs');
 const path = require('path');
 const fetchRequests = require('./fetchRequests');
 const processRequests = require('./processRequests');
@@ -13,7 +14,13 @@ const downloadFolder = path.resolve(__dirname, downloadPath);
 (async () => {
     try {
         const filteredRequests = await fetchRequests(URL, external_components);
-        await processRequests(filteredRequests, baseUrl, downloadFolder, generateFile);
+        const assets = await processRequests(filteredRequests, baseUrl, downloadFolder);
+
+        const fileContent = generateFile(assets);
+        const fileSavePath = path.join(downloadFolder, 'assetsTable.html');
+        fs.writeFileSync(fileSavePath, fileContent);
+
+        console.log('Confluence file created', fileSavePath);
     } catch (error) {
         console.error('Error:', error);
     }
