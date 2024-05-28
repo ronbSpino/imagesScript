@@ -16,7 +16,7 @@ const downloadFolder = path.resolve(__dirname, downloadPath);
         const filteredRequests = await fetchRequests(URL, external_components);
         const assets = await processRequests(filteredRequests, baseUrl, downloadFolder);
 
-        const fileContent = generateFile(assets);
+        const fileContent = generateFile(assets, external_components);
         const fileSavePath = path.join(downloadFolder, 'assetsTable.html');
         fs.writeFileSync(fileSavePath, fileContent);
 
