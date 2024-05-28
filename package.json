@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/ronbSpino/imagesScript#readme",
   "dependencies": {
+    "html-pdf-node": "^1.0.8",
     "node-fetch": "^3.3.2",
     "puppeteer": "^22.10.0"
   }

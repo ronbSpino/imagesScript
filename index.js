@@ -3,6 +3,8 @@ const path = require('path');
 const fetchRequests = require('./scripts/fetchRequests');
 const processRequests = require('./processRequests');
 const generateFile = require('./scripts/generateFile');
+const generatePdf = require('./scripts/generatePdf');
+
 
 const URL = 'https://cdn-newdev.spinomenal.com/external_components/generic-play.html?partnerId=SPIN-market-dev&launchToken=e46a872e-482&gameCode=Krembo_BookOfDemiGodsV&langCode=en_US&IsFunMode=true&inter=0&extComLabel=PLAT-1102.Spin_button_transition&InitClientUrl=https%3a%2f%2frgs-dev-demo.spinomenal.com%2fapi%2fInitClientUrl&KremboGameRibbonV=game_ribbon.ron-test.js';
 const external_components = 'game_ribbon';
@@ -17,8 +19,9 @@ const downloadFolder = path.resolve(__dirname, downloadPath);
         const assets = await processRequests(filteredRequests, baseUrl, downloadFolder);
 
         const fileContent = generateFile(assets, external_components);
-        const fileSavePath = path.join(downloadFolder, 'assetsTable.html');
-        fs.writeFileSync(fileSavePath, fileContent);
+        const fileSavePath = path.join(downloadFolder, `assetsTable_${external_components}.pdf`);
+        await generatePdf(fileContent, fileSavePath);
+
 
         console.log('Confluence file created', fileSavePath);
     } catch (error) {
