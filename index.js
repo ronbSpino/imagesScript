@@ -19,11 +19,14 @@ const downloadFolder = path.resolve(__dirname, downloadPath);
         const assets = await processRequests(filteredRequests, baseUrl, downloadFolder);
 
         const fileContent = generateFile(assets, external_components);
-        const fileSavePath = path.join(downloadFolder, `assetsTable_${external_components}.pdf`);
-        await generatePdf(fileContent, fileSavePath);
+        const fileHtml = path.join(downloadFolder, `assetsTable_${external_components}.html`);
+        const filePdf = path.join(downloadFolder, `assetsTable_${external_components}.pdf`);
+
+        await generatePdf(fileContent, filePdf);
+        await fs.writeFileSync(fileHtml, fileContent);
 
 
-        console.log('Confluence file created', fileSavePath);
+        console.log('Confluence file created', filePdf);
     } catch (error) {
         console.error('Error:', error);
     }
