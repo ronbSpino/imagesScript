@@ -1,8 +1,8 @@
 const fs = require('fs');
 const path = require('path');
-const fetchRequests = require('./fetchRequests');
+const fetchRequests = require('./scripts/fetchRequests');
 const processRequests = require('./processRequests');
-const generateFile = require('./generateFile');
+const generateFile = require('./scripts/generateFile');
 
 const URL = 'https://cdn-newdev.spinomenal.com/external_components/generic-play.html?partnerId=SPIN-market-dev&launchToken=e46a872e-482&gameCode=Krembo_BookOfDemiGodsV&langCode=en_US&IsFunMode=true&inter=0&extComLabel=PLAT-1102.Spin_button_transition&InitClientUrl=https%3a%2f%2frgs-dev-demo.spinomenal.com%2fapi%2fInitClientUrl&KremboGameRibbonV=game_ribbon.ron-test.js';
 const external_components = 'game_ribbon';
