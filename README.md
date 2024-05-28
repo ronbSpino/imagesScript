@@ -7,6 +7,8 @@ This script is designed to process images by downloading, compressing, and organ
 ## Prerequisites
 
 - Make sure you have Node.js installed on your system.
+- Change the URL value for spefeic label 
+- Change the external_components for each component 
 
 ## Installation
 
