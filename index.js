@@ -1,6 +1,7 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs');
 const path = require('path');
+const generateFile = require('./generateFile');
 
 //change those paths for each component
 const URL = 'https://cdn-newdev.spinomenal.com/external_components/generic-play.html?partnerId=SPIN-market-dev&launchToken=e46a872e-482&gameCode=Krembo_BookOfDemiGodsV&langCode=en_US&IsFunMode=true&inter=0&extComLabel=PLAT-1102.Spin_button_transition&InitClientUrl=https%3a%2f%2frgs-dev-demo.spinomenal.com%2fapi%2fInitClientUrl&KremboGameRibbonV=game_ribbon.ron-test.js';
@@ -63,7 +64,7 @@ if (!fs.existsSync(downloadFolder)) {
     const assets = await Promise.all(downloadPromises);
     assets.sort((a, b) => b.size - a.size);
 
-    const fileContent = generateFile(assets)
+    const fileContent = generateFile(assets, external_components)
     const fileSavePath = path.join(downloadFolder, 'assetsTable.html');
     fs.writeFileSync(fileSavePath, fileContent);
 
@@ -74,49 +75,3 @@ if (!fs.existsSync(downloadFolder)) {
 })();
 
 
-const generateFile = (assets) => {
-    const totalSize = assets.reduce((total, asset) => {
-        return total + parseFloat(asset.size);
-    }, 0)
-    const tableRows = assets.map(asset => {
-        return `
-  <tr>
-    <td>${asset.name}</td>
-    <td>${asset.relativePath}</td>
-    <td>${asset.size} KB</td>
-    <td><img src="${asset.url}" style="width: 50px;"></td>
-  </tr>
-`;
-    }).join('\n');
-
-    const htmlContent = `
-        <html>
-        <head>
-        <style>
-            table { width: 100%; border-collapse: collapse; }
-            th, td { border: 1px solid black; padding: 8px; text-align: left; }
-        </style>
-        </head>
-        <body>
-        <h1>Assets Table - ${external_components}</h1>
-        <h2>Total Assets: ${assets.length}</h2>
-        <h2>Total Size: ${totalSize} KB</h2>
-        <table>
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Relative Path</th>
-                <th>Size</th>
-                <th>Image Url Path</th>
-            </tr>
-            </thead>
-            <tbody>
-            ${tableRows}
-            </tbody>
-        </table>
-        </body>
-        </html>
-        `;
-
-    return htmlContent
-}
