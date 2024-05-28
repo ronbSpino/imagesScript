@@ -63,51 +63,56 @@ if (!fs.existsSync(downloadFolder)) {
     const assets = await Promise.all(downloadPromises);
     assets.sort((a, b) => b.size - a.size);
 
-
-    // Create HTML table
-    const tableRows = assets.map(asset => {
-        return `
-      <tr>
-        <td>${asset.name}</td>
-        <td>${asset.relativePath}</td>
-        <td>${asset.size} KB</td>
-        <td><img src="${asset.url}" style="width: 50px;"></td>
-      </tr>
-    `;
-    }).join('\n');
-
-    const htmlContent = `
-    <html>
-    <head>
-      <style>
-        table { width: 100%; border-collapse: collapse; }
-        th, td { border: 1px solid black; padding: 8px; text-align: left; }
-      </style>
-    </head>
-    <body>
-      <h1>Assets Table</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Relative Path</th>
-            <th>Size</th>
-            <th>Image Url Path</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${tableRows}
-        </tbody>
-      </table>
-    </body>
-    </html>
-  `;
-
+    const fileContent = generateFile(assets)
     const fileSavePath = path.join(downloadFolder, 'assetsTable.html');
-    fs.writeFileSync(fileSavePath, htmlContent);
+    fs.writeFileSync(fileSavePath, fileContent);
 
 
     console.log('Confluence file created')
 
     await browser.close();
 })();
+
+
+const generateFile = (assets) => {
+    // Create HTML table
+    const tableRows = assets.map(asset => {
+        return `
+  <tr>
+    <td>${asset.name}</td>
+    <td>${asset.relativePath}</td>
+    <td>${asset.size} KB</td>
+    <td><img src="${asset.url}" style="width: 50px;"></td>
+  </tr>
+`;
+    }).join('\n');
+
+    const htmlContent = `
+        <html>
+        <head>
+        <style>
+            table { width: 100%; border-collapse: collapse; }
+            th, td { border: 1px solid black; padding: 8px; text-align: left; }
+        </style>
+        </head>
+        <body>
+        <h1>Assets Table</h1>
+        <table>
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Relative Path</th>
+                <th>Size</th>
+                <th>Image Url Path</th>
+            </tr>
+            </thead>
+            <tbody>
+            ${tableRows}
+            </tbody>
+        </table>
+        </body>
+        </html>
+        `;
+
+    return htmlContent
+}
